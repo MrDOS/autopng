@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>AutoPNG image demonstration</title>
+		<!-- Just some general CSS. -->
+		<style type="text/css">
+		<!--
+
+		h2, h3, p {
+			clear: both;
+		}
+
+		.blue {
+			background-color: #0000ff;
+		}
+
+		.green {
+			background-color: #00ff00;
+		}
+
+		.red {
+			background-color: #ff0000;
+		}
+
+		.small {
+			font-size: 80%;
+		}
+
+		-->
+		</style>
+		<!-- This is what you're interested in. -->
+		<!--[if lte IE 6]>
+		<style type="text/css">
+
+		img {
+			display: inline-block;
+			padding-top: 100%;
+			filter: expression("progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "',sizingMethod='image')");
+		}
+
+		</style>
+		<![endif]-->
+	</head>
+	<body>
+		<h1>AutoPNG image demonstration</h1>
+		<p>Test images should appear the same in all browsers. Please note that the page as a whole may not appear the same due to other rendering deficiencies in IE6.</p>
+
+		<h2>Test on PNGs</h2>
+		<p>Each block is the same PNG image with three classes giving each one a different background colour.</p>
+		<div>
+			<img src="png.png" alt="Alphatransparent PNG test" class="red" />
+			<img src="png.png" alt="Alphatransparent PNG test" class="green" />
+			<img src="png.png" alt="Alphatransparent PNG test" class="blue" />
+		</div>
+
+		<h2>Test on PNG, GIF and JPG</h2>
+		<p>This demonstrates that the application of <code>AlphaImageLoader</code> to all images does not inhibit the display of other image formats.</p>
+		<div>
+			<img src="jpg.jpg" alt="Non-transparent JPEG" class="blue" />
+			<img src="gif.gif" alt="2-bit GIF transparency" class="blue" />
+			<img src="png.png" alt="Alphatransparent PNG test" class="blue" />
+		</div>
+	</body>
+</html>

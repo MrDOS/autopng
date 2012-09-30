@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>AutoPNG background image demonstration</title>
+		<!-- Just some general CSS. -->
+		<style type="text/css">
+		<!--
+
+		h2, h3, p {
+			clear: both;
+		}
+
+		.block {
+			height: 320px;
+			width: 320px;
+		}
+
+		.block-wide {
+			height: 320px;
+			width: 100%;
+		}
+
+		.blue {
+			background-color: #0000ff;
+		}
+
+		.green {
+			background-color: #00ff00;
+		}
+
+		.red {
+			background-color: #ff0000;
+		}
+
+		/* Test selectors */
+
+		.gifblock {
+			background: url("gif.gif") no-repeat transparent;
+		}
+
+		.jpgblock {
+			background: url("jpg.jpg") no-repeat transparent;
+		}
+
+		.pngblock {
+			background: url("png.png") no-repeat transparent;
+		}
+
+		.pngblock-wide {
+			background: url("png.png") repeat-x transparent;
+		}
+
+		-->
+		</style>
+		<!--
+
+		This is what you're interested in. For commenting, see autopng.css.
+
+		-->
+		<!--[if lte IE 6]>
+		<style type="text/css">
+
+		.autopng
+		{
+			background-position: -10000px !important;
+			background-repeat: expression(
+				(this.currentStyle.backgroundRepeat.substr(0, 6) == 'repeat')
+					? "repeat-y"
+					: "no-repeat");
+			filter: expression(
+				'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'
+				+ this.currentStyle.backgroundImage.substr(
+					this.currentStyle.backgroundImage.search(':') + 1,
+					this.currentStyle.backgroundImage.lastIndexOf('"') - 1
+					- this.currentStyle.backgroundImage.search(':'))
+				+ '",sizingMethod="'
+				+ ((this.currentStyle.backgroundRepeat.substr(0, 6) == 'repeat')
+					? "scale" : "crop") + '")');
+		}
+
+		</style>
+		<![endif]-->
+	</head>
+	<body>
+		<h1>AutoPNG background image demonstration</h1>
+		<p>Test images, except for the repeating image test, should appear the same in all browsers. Please note that the page as a whole may not appear the same due to other rendering deficiencies in IE6.</p>
+
+		<h2>Test on non-repeating PNGs</h2>
+		<p>Each block containts two elements: one, the external element, has the background colour; the second element contains the image as a background image. The image is the same for all three blocks.</p>
+		<div class="red block">
+			<div class="block pngblock autopng">&nbsp;</div>
+		</div>
+		<div class="green block">
+			<div class="block pngblock autopng">&nbsp;</div>
+		</div>
+		<div class="blue block">
+			<div class="block pngblock autopng">&nbsp;</div>
+		</div>
+
+		<h2>Test on repeating PNGs</h2>
+		<p>In any sane browser, this should be the red block from above horizontally repeating for the width of the browser; in IE6, this should be the red block from above stretched to the width of the browser.</p>
+		<div class="red block-wide">
+			<div class="block-wide pngblock-wide autopng">&nbsp;</div>
+		</div>
+
+		<h2>Test on PNG, GIF and JPG</h2>
+		<p>This demonstrates that the application of <code>AlphaImageLoader</code> to all images does not inhibit the display of other image formats.</p>
+		<div class="blue block">
+			<div class="block jpgblock autopng">&nbsp;</div>
+		</div>
+		<div class="blue block">
+			<div class="block gifblock autopng">&nbsp;</div>
+		</div>
+		<div class="blue block">
+			<div class="block pngblock autopng">&nbsp;</div>
+		</div>
+	</body>
+</html>

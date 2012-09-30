@@ -1,0 +1,55 @@
+/*
+ * AutoPNG Image Compatibility
+ * Originally released as "Automatic Application of AlphaImageLoader for
+ * Background Images in Internet Explorer 6, Version 2" and "Automatic
+ * Application of AlphaImageLoader for <img> Tags in Internet Explorer 6".
+ * Copyright (c) 2009-2012 Mr. DOS.
+ * CC BY-SA: https://creativecommons.org/licenses/by-sa/3.0/
+ */
+
+/* <img> tag rule */
+img {
+	display: inline-block;
+	/* Push the original image down past the bottom of the rendering area,
+	 * causing it to be hidden. It can't be removed or else the element size
+	 * will change. */
+	padding-top: 100%;
+	filter: expression("progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "',sizingMethod='image')");
+}
+
+/* Background image rule */
+.autopng
+{
+	/* Stop the real background image from being displayed by moving it out of
+	 * the render area. We can't remove the property value altogether, because
+	 * then the CSS expression, which is evaluated later, wouldn't know what the
+	 * original value was. */
+	background-position: -10000px !important;
+	/* If the background image was repeating in either direction, we make it
+	 * repeat vertically. This ensures that it won't be visible -- it is, after
+	 * all, being shoved 10,000 pixels to the left -- but we'll know that it is
+	 * supposed to be repeating come time to set the filter sizing method. */
+	background-repeat: expression(
+		(this.currentStyle.backgroundRepeat.substr(0, 6) == 'repeat')
+			? "repeat-y"
+			: "no-repeat");
+	/* Set the icky, icky transform filter based on the original
+	 * background-image and background-repeat values. We assume that the image
+	 * should scale if it was originally repeating. */
+	filter: expression(
+		'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'
+		/* .backgroundImage is in the form of "url('http://absolute/url');", but
+		 * we need just the URL. */
+		+ this.currentStyle.backgroundImage.substr(
+			/* By stripping from the "//" after "http://", we can handle both
+			 * "http://" and "https://". */
+			this.currentStyle.backgroundImage.search(':') + 1,
+			/* Then we go backwards from the last quotation mark to the position
+			 * of the "//"s. */
+			this.currentStyle.backgroundImage.lastIndexOf('"') - 1
+			- this.currentStyle.backgroundImage.search(':'))
+		+ '",sizingMethod="'
+		/* The sizing method depends on the repeat mode, as described above. */
+		+ ((this.currentStyle.backgroundRepeat.substr(0, 6) == 'repeat')
+			? "scale" : "crop") + '")');
+}
